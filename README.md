@@ -4,7 +4,7 @@ In this group project you will customize a suitable linear data structure you  l
 # General instructions:
 
 - [x] Pick a group leader and mention his name to your instructor 
-- [ ] Create github project and on board all the members
+- [x] Create github project and on board all the members
 - [ ] Create a good communication channel
 - [ ] Create a check list of to do items
 - [ ] Sit down as a group and discuss strategies and architecture the project
