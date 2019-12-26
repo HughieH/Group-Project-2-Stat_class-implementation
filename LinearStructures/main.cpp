@@ -1,7 +1,7 @@
-#include "link.h"
-#include "dlink.h"
+// #include "link.h"
+// #include "dlink.h"
 // #include "alist.h"
-#include "llist.h"
+// #include "llist.h"
 #include "dllist.h"
 // #include "astack.h"
 // #include "lstack.h"
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
   // std::cout << "\nThe max of my dllist is: " <<  max << std::endl;
   
   // /* testing index overload[] */
-  std::cout << "\ntesting [] indexing: " << std::endl;
-  std::cout << "[6] = " << int_doubly_linked_list[6] << std::endl;
+  // std::cout << "\ntesting [] indexing: " << std::endl;
+  // std::cout << "[6] = " << int_doubly_linked_list[6] << std::endl;
 
   /* testing get_mean */
   // int the_mean = int_doubly_linked_list.get_mean();
@@ -57,16 +57,16 @@ int main(int argc, char *argv[])
   //   int_doubly_linked_list.length_unique() << std::endl;
   
   /* testing get_median */
-  // DLList<int> ordered_dllist;
-  // int the_list2[8] = {1, 10, -2, 3, 6, 2, 9, -1};
-  // std::sort(the_list2, the_list2 + 8);
-  // for(auto const&i : the_list2)
-  // {
-  //   ordered_dllist.append(i);
-  // }
-  // ordered_dllist.printMirrorDLLIST();
-  // std::cout << "\nthe median of my dllist is " << ordered_dllist.get_median()
-  //   << std::endl;
+  DLList<int> ordered_dllist;
+  int the_list2[8] = {1, 10, -2, 3, 6, 2, 9, -1};
+  std::sort(the_list2, the_list2 + 8); // get_median requires the data to be
+  // sorted
+  for(auto const&i : the_list2)
+  {
+    ordered_dllist.append(i);
+  }
+  std::cout << "\nthe median of my dllist is " << ordered_dllist.get_median()
+    << std::endl;
 
   return 0;
 
