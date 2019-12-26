@@ -23,7 +23,7 @@ private:
   DLink<E>* curr; // Access to current element
   int cnt; // Size of list
 
-  std::vector<E> count_array;
+  std::vector<E> count_arr;
   E mode, min, max;
   double median, mean, std_deviation;
 
@@ -88,6 +88,7 @@ public:
   void moveToStart() {
     curr = head;
   }
+
   // Place curr at list end
   void moveToEnd(){
     curr = tail;
@@ -98,7 +99,7 @@ public:
     if (curr != tail) curr = curr->next;
   }
   
-  int length() const {
+  int length_total() const {
     return cnt; } // Return length
   // Return the position of the current element
   int currPos() const {
@@ -108,21 +109,24 @@ public:
       temp = temp->next;
     return i;
   }
+
   // Move down list to "pos" position
   void moveToPos(int pos) {
     Assert ((pos>=0)&&(pos<=cnt), "Position out of range");
     curr = head;
     for(int i=0; i<pos; i++) curr = curr->next;
   }
-  const E& getValue() const { // Return current element
+
+  const E& getValue() const 
+  { // Return current element
     Assert(curr->next != NULL, "No value");
     return curr->next->element;
   }
 
   void reverse() {}
 
-  bool isAtEnd() { return curr == tail; }
-  bool isAtBegin() { return curr == head; }
+  bool isAtEnd()const  { return curr == tail; }
+  bool isAtBegin()const  { return curr == head; }
 
 
   // a testing method purposed for getting used to printing 
@@ -148,13 +152,30 @@ public:
 
   // element(s) of the data set which has(have) the
   // most occurance in the data set
+  //? I utilized counting sort algorithm
   E get_mode() {
     curr = head->next;
-    while (!isAtEnd()) {
-      count_array.pushback(curr->element);
+    std::vector<E> arr;
+    while (!isAtEnd()) 
+    {
+      arr.push_back(curr->element);
       curr=curr->next;
     }
+    int max = *std::max_element(arr.begin(), arr.end());
+    int min = *std::min_element(arr.begin(), arr.end());
+    std::vector<int> tempCount(max - min,0);
+
+    for(auto const&i : arr)
+      ++tempCount[i];
+
+    count_arr = tempCount;
+    mode = std::max_element( tempCount.begin(), tempCount.end() )
+     - tempCount.begin();
+
+    return mode;
   }
+
+  
 
   // middle of the data set, if the data size is odd, 
   // its physically in the middle. else if data size is even,
@@ -177,7 +198,6 @@ public:
       {
         curr=curr->next; 
       }
-      std::cout << "\ncurr and currnext number is: " <<curr->element << " " << curr->next->element << "\n";
       double result=(double)(curr->element + curr->next->element) / 2;
       median=result;
       return result;
@@ -206,7 +226,8 @@ public:
   double get_std_deviation() {
     double std_d=0;
     curr = head->next;
-    while (!isAtEnd()) {
+    while (!isAtEnd()) 
+    {
       std_d = pow(curr->element - mean, 2);
       curr=curr->next;
     }
@@ -240,6 +261,43 @@ public:
     return min;
   }
 
+  // index: overload the array index operator ([]) so that the
+  // ith data element in an instance of your data object, db 
+  // can be accessed like db[i]  
+  E& operator[](const size_t index) { 
+    Assert ((index>=0) && (index<=cnt-1), "\nIndex out of range!\n");
+
+    curr=head->next;
+    for (size_t i = 0; i < index; i++)
+    {
+      curr=curr->next;
+    }
+    return curr->element;
+  } 
+
+  //number of unique elements in your data object
+  int length_unique() const {
+    int num_unique=0;
+
+    curr=head->next;
+    std::vector<E> arr; // this is the same count_array I had in get_mode
+    while (!isAtEnd()) 
+    {
+      arr.push_back(curr->element);
+      curr=curr->next;
+    }
+    int max = *std::max_element(arr.begin(), arr.end());
+    int min = *std::min_element(arr.begin(), arr.end());
+    std::vector<int> tempCount(max - min + 1,0);
+
+    for(auto const&i : arr)
+      ++tempCount[i - min];
+
+    for(auto const&i : tempCount)
+      if(i == 1) { num_unique++; }
+
+    return num_unique;
+  }
 };
 
 
