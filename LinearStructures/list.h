@@ -35,7 +35,7 @@ public:
   // if already at end.
   virtual void next() = 0;
   // Return: The number of elements in the list.
-  virtual int length() const = 0;
+  virtual int length_total() const = 0;
   // Return: The position of the current element.
   virtual int currPos() const = 0;
   // Set current position.
@@ -45,7 +45,8 @@ public:
   virtual const E& getValue() const = 0;
   // Reverse the list
   virtual void reverse() = 0;
-  virtual bool isAtEnd() = 0;
+  virtual bool isAtEnd() const = 0;
+  virtual bool isAtBegin() const = 0;
 };
 
 #endif // LIST_H
